@@ -8,7 +8,7 @@ inputs:
   number:
     description: ''
     required: false
-    default: ${{ github.event.pull_request.number || github.event.issue.number }}
+    default: ${{ github.event.issue.number }}
   repository:
     description: ''
     required: false
@@ -45,7 +45,7 @@ runs:
         validate_is_not_empty "$GH_REPO" 'repository'
         validate_is_not_empty "$GH_TOKEN" 'github-token'
 
-        labels=$(gh pr view "$NUMBER" --json labels -q '.labels|map(.name)')
+        labels=$(gh issue view "$NUMBER" --json labels -q '.labels|map(.name)')
 
         echo "labels: $labels"
         
